@@ -1,50 +1,62 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { List, InputItem, WhiteSpace, WingBlank, Button } from 'antd-mobile';
-import store from './storeone'
-import {changeText_one,addText_one,delText_one} from './storeone/createAction'
-const Item = List.Item
+import store from './storeone';
+import { changeText_one, addText_one, delText_one } from './storeone/createAction';
+const Item = List.Item;
 //对于App01的进一步优化
 class App02 extends Component {
-    constructor(props) {
-        super(props);
-        this.state = store.getState();
-        console.log(this.state);
-        //当store的数据发生变化后来更新视图内容
-        store.subscribe(this.storeChange)
-    }
-    render() { 
-        return (<div style={{'padding':'10px'}}>
-            <WingBlank>
-                <InputItem placeholder={this.state.textValue} onChange={(e)=>this.changeText(e)}></InputItem>
-                <WhiteSpace></WhiteSpace>
-                <Button type="primary" onClick = {()=>this.addText()}>按钮</Button>
-                <WhiteSpace></WhiteSpace>
-                <List className="my-list">
-                    {this.state.itemArr.map((item,i)=>{
-                         return <Item key={i} onClick={()=>this.delText(i)}>{item}</Item>
-                    })}
-                </List>
-            </WingBlank>
-        </div>);
-    }
-    changeText=(e)=>{
-        console.log(e)
-        const action = changeText_one(e)
-        store.dispatch(action)
-    }
-    addText=()=>{
-        console.log('123')
-        const action = addText_one()
-        store.dispatch(action)
-    }
-    delText=(i)=>{
-        console.log(i)
-        const action = delText_one(i)
-        store.dispatch(action)
-    }
-    storeChange=()=>{
-        this.setState(store.getState());
-    }
+	constructor(props) {
+		super(props);
+		this.state = store.getState();
+		console.log(this.state);
+		//当store的数据发生变化后来更新视图内容
+		store.subscribe(this.storeChange);
+	}
+	render() {
+		return (
+			<div style={{ padding: '10px' }}>
+				<WingBlank>
+					<InputItem placeholder={this.state.textValue} onChange={this.changeText} />
+					<WhiteSpace />
+					<Button type="primary" onClick={this.addText}>
+						按钮
+					</Button>
+					<WhiteSpace />
+					<List className="my-list">
+						{this.state.itemArr.map((item, i) => {
+							return (
+								<Item key={i} onClick={() => this.delText(i)}>
+									{item}
+								</Item>
+							);
+						})}
+					</List>
+				</WingBlank>
+			</div>
+		);
+	}
+
+	changeText = (e) => {
+		console.log(e);
+		const action = changeText_one(e);
+		store.dispatch(action);
+	};
+
+	addText = () => {
+		console.log('123');
+		const action = addText_one();
+		store.dispatch(action);
+	};
+
+	delText = (i) => {
+		console.log(i);
+		const action = delText_one(i);
+		store.dispatch(action);
+	};
+
+	storeChange = () => {
+		this.setState(store.getState());
+	};
 }
- 
+
 export default App02;
